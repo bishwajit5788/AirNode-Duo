@@ -154,3 +154,9 @@ The current project concept image is stored directly in the hardware archive:
 ![AirNode Duo hardware concept](prototype/airnode-duo-overview.jpg)
 
 This image represents the **current design concept**, not a photograph of the assembled physical prototype. Future real hardware photographs should be added under `hardware/prototype/` with dated filenames and captions.
+
+## Concept diagrams
+
+- [Thermoelectric cooling (SVG)](concept/airnode-duo-thermoelectric-cooling.svg) — schematic diagram
+- [Thermoelectric cooling (PNG)](concept/airnode-duo-thermoelectric-cooling.png) — generated concept illustration
+- [Thermoelectric cooling (JPG)](concept/airnode-duo-thermoelectric-cooling.jpg) — same illustration
