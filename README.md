@@ -358,7 +358,7 @@ Repository includes concept docs, cooling diagrams, PlatformIO firmware (modular
 | Claim type | Status |
 |------------|--------|
 | Firmware designed & modularized | Yes |
-| Firmware compiles (PlatformIO / ESP32-C3) | Yes (see CI / local `pio run`) |
+| Firmware compile verification | **Pending CI result after current PWM compatibility fix** |
 | Physical motor/cooling validation | **Not complete** — pending bench & field tests |
 
 Do **not** mark hardware validation complete without measurements.
@@ -375,7 +375,9 @@ Do **not** mark hardware validation complete without measurements.
 - [x] Controlled startup ramp, explicit START/STOP  
 - [x] Heartbeat failsafe (1.5 s; no auto-restart)  
 - [x] Cooling sequence (pump prime → TEC; Motor 1 airflow interlock)  
-- [x] Modular `src/` layout  
+- [x] Modular `src/` layout
+- [x] Arduino-ESP32 3.x-compatible LEDC ESC output (14-bit at 50 Hz)
+- [x] Arduino-ESP32 2.x compatibility path retained  
 
 **Next / hardware:**
 
@@ -404,6 +406,31 @@ Do **not** mark hardware validation complete without measurements.
 
 ---
 
+## 20. Verification status
+
+The repository is ready for the next software/bench-test stage, but physical operation is still unverified.
+
+### Resolved in the current firmware
+
+- Updated ESC PWM handling for Arduino-ESP32 3.x (ledcAttach / pin-based ledcWrite).
+- Retained a compatibility path for Arduino-ESP32 2.x.
+- Changed ESP32-C3 ESC PWM resolution from 16-bit to **14-bit**, matching the current Arduino-ESP32 LEDC range for ESP32-C3.
+- Added a PWM-initialization failure lockout so the controller cannot arm motors if LEDC setup fails.
+
+### Still requires physical hardware validation
+
+- Exact ESP32-C3 board pinout.
+- ESC signal/arming behavior with the selected LittleBee ESCs.
+- Motor/propeller current and temperature.
+- Propeller direction and downward airflow.
+- Frame strength, vibration and guards.
+- Peltier hot-side temperature.
+- Coolant flow and leak resistance.
+- Condensation behavior.
+- Physical emergency disconnect.
+
+**A successful firmware build does not prove that the motor/cooling system is safe for operation above a person.**
+
 ## 20. Documentation map
 
 | Path | Role |
@@ -416,7 +443,7 @@ Do **not** mark hardware validation complete without measurements.
 
 ---
 
-## 21. Intended end-to-end experience
+## 22. Intended end-to-end experience
 
 ```text
 USER POWERS AIRNODE DUO
