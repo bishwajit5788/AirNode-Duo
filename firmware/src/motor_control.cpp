@@ -43,16 +43,18 @@ static void writeEscPulse(uint8_t pin, uint8_t channel, uint16_t us) {
 #endif
 }
 
+static uint16_t percentToPulse(uint8_t pct) {
+  pct = constrain(pct, (uint8_t)0, (uint8_t)100);
+  return ESC_MIN_US + ((uint32_t)pct * (ESC_MAX_US - ESC_MIN_US)) / 100UL;
+}
+
 static void applyOutputs() {
   if (!s_pwmReady) return;
   writeEscPulse(ESC1_PIN, CH_ESC1, percentToPulse(s_m1Applied));
   writeEscPulse(ESC2_PIN, CH_ESC2, percentToPulse(s_m2Applied));
 }
 
-static uint16_t percentToPulse(uint8_t pct) {
-  pct = constrain(pct, (uint8_t)0, (uint8_t)100);
-  return ESC_MIN_US + ((uint32_t)pct * (ESC_MAX_US - ESC_MIN_US)) / 100UL;
-}
+
 
 void begin() {
   s_bootMs = millis();
