@@ -21,6 +21,7 @@
 // GPIO map (centralized — do not hard-code pins elsewhere)
 // ---------------------------------------------------------------------------
 // ESC signal outputs. Logic-level PWM only (50 Hz servo-style).
+// ESP32-C3 LEDC supports up to 14-bit resolution in Arduino-ESP32 3.x.
 #define ESC1_PIN 4
 #define ESC2_PIN 5
 
