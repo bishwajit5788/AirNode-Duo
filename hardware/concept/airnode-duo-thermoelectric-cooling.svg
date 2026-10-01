@@ -1,99 +1,184 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
-  <rect width="1400" height="900" fill="#0b0d10"/>
-  <text x="700" y="58" fill="#ffffff" font-size="34" font-family="Arial" text-anchor="middle" font-weight="700">AirNode Duo — Thermoelectric Liquid-to-Air Cooling Concept</text>
-  <text x="700" y="94" fill="#aab4c0" font-size="20" font-family="Arial" text-anchor="middle">Motor 1 drives airflow across a copper coolant coil; Motor 2 provides independent airflow.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e12"/>
+      <stop offset="100%" stop-color="#121820"/>
+    </linearGradient>
+    <linearGradient id="cold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3d9eff"/>
+      <stop offset="100%" stop-color="#55d6be"/>
+    </linearGradient>
+    <linearGradient id="hot" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff8a5c"/>
+      <stop offset="100%" stop-color="#e85d5d"/>
+    </linearGradient>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#55d6be"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#8ed0ff"/>
+    </marker>
+    <marker id="arrowHot" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#ff8a5c"/>
+    </marker>
+  </defs>
 
-  <!-- roof/frame -->
-  <line x1="120" y1="155" x2="1280" y2="155" stroke="#66707a" stroke-width="5"/>
-  <text x="700" y="140" fill="#aab4c0" font-size="18" font-family="Arial" text-anchor="middle">MOSQUITO NET / TENT ROOF</text>
+  <rect width="1600" height="1100" fill="url(#bg)"/>
 
-  <!-- Motor 1 -->
-  <circle cx="350" cy="245" r="72" fill="#171b20" stroke="#ffffff" stroke-width="3"/>
-  <circle cx="350" cy="245" r="20" fill="#0b0d10" stroke="#ffffff" stroke-width="3"/>
-  <text x="350" y="345" fill="#ffffff" font-size="22" font-family="Arial" text-anchor="middle">2312 920KV</text>
-  <text x="350" y="374" fill="#aab4c0" font-size="19" font-family="Arial" text-anchor="middle">MOTOR 1 • CW</text>
+  <!-- Title -->
+  <text x="800" y="48" fill="#f2f5f0" font-size="32" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700">AirNode Duo — Thermoelectric Liquid-to-Air Cooling</text>
+  <text x="800" y="78" fill="#8a9a90" font-size="16" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">Motor 1 moves air across a cooled copper coil · Motor 2 provides independent airflow · Cool the person, not the room</text>
 
-  <!-- prop blades -->
-  <path d="M350 225 C270 175 225 195 285 235 C315 255 330 255 350 245" fill="none" stroke="#8ed0ff" stroke-width="8"/>
-  <path d="M370 245 C420 165 400 125 360 190 C345 215 345 230 350 245" fill="none" stroke="#8ed0ff" stroke-width="8"/>
-  <path d="M350 265 C430 315 475 295 415 255 C385 235 370 235 350 245" fill="none" stroke="#8ed0ff" stroke-width="8"/>
-  <path d="M330 245 C280 325 300 365 340 300 C355 275 355 260 350 245" fill="none" stroke="#8ed0ff" stroke-width="8"/>
+  <!-- Roof bar -->
+  <rect x="80" y="110" width="1440" height="8" rx="2" fill="#3a4550"/>
+  <text x="800" y="105" fill="#8a9a90" font-size="14" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" letter-spacing="2">MOSQUITO NET / TENT ROOF</text>
 
-  <!-- Motor 2 -->
-  <circle cx="1050" cy="245" r="72" fill="#171b20" stroke="#ffffff" stroke-width="3"/>
-  <circle cx="1050" cy="245" r="20" fill="#0b0d10" stroke="#ffffff" stroke-width="3"/>
-  <text x="1050" y="345" fill="#ffffff" font-size="22" font-family="Arial" text-anchor="middle">2312 920KV</text>
-  <text x="1050" y="374" fill="#aab4c0" font-size="19" font-family="Arial" text-anchor="middle">MOTOR 2 • CW</text>
+  <!-- ========== MOTOR 1 COLUMN ========== -->
+  <text x="280" y="150" fill="#5ecf8a" font-size="13" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700" letter-spacing="1">MOTOR 1 — COOLED PATH</text>
 
-  <!-- airflow arrows -->
-  <g stroke="#55d6be" stroke-width="6" fill="none">
-    <path d="M350 325 L350 445"/>
-    <path d="M1050 325 L1050 445"/>
+  <!-- Motor 1 body -->
+  <circle cx="280" cy="230" r="58" fill="#1a2228" stroke="#e8efe9" stroke-width="3"/>
+  <circle cx="280" cy="230" r="16" fill="#0a0e12" stroke="#e8efe9" stroke-width="2"/>
+  <!-- prop stylized -->
+  <g stroke="#8ed0ff" stroke-width="7" fill="none" stroke-linecap="round">
+    <path d="M280 210 C220 175 200 195 245 225"/>
+    <path d="M300 230 C340 170 325 145 295 195"/>
+    <path d="M280 250 C340 285 360 265 315 235"/>
+    <path d="M260 230 C220 290 235 315 265 265"/>
   </g>
-  <g fill="#55d6be">
-    <path d="M350 455 l-13 -25 h26 z"/>
-    <path d="M1050 455 l-13 -25 h26 z"/>
-  </g>
-  <text x="350" y="485" fill="#55d6be" font-size="18" font-family="Arial" text-anchor="middle">AIRFLOW</text>
-  <text x="1050" y="485" fill="#55d6be" font-size="18" font-family="Arial" text-anchor="middle">NORMAL AIRFLOW</text>
+  <text x="280" y="310" fill="#f2f5f0" font-size="15" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700">2312 920KV CW</text>
+  <text x="280" y="328" fill="#8a9a90" font-size="12" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">PROP · ESC #1 · GPIO 4</text>
+
+  <!-- Airflow down to coil -->
+  <line x1="280" y1="340" x2="280" y2="400" stroke="#55d6be" stroke-width="4" marker-end="url(#arrowGreen)"/>
+  <text x="305" y="375" fill="#55d6be" font-size="12" font-family="Segoe UI, Arial, sans-serif">AIRFLOW</text>
 
   <!-- Copper coil -->
-  <rect x="210" y="510" width="280" height="190" rx="20" fill="#171b20" stroke="#d68b45" stroke-width="4"/>
-  <text x="350" y="540" fill="#ffffff" font-size="22" font-family="Arial" text-anchor="middle" font-weight="700">COPPER COOLING COIL</text>
-  <path d="M245 585 C285 545 325 625 365 585 C405 545 445 625 475 585" fill="none" stroke="#d68b45" stroke-width="9"/>
-  <path d="M245 630 C285 590 325 670 365 630 C405 590 445 670 475 630" fill="none" stroke="#d68b45" stroke-width="9"/>
-  <text x="350" y="680" fill="#aab4c0" font-size="16" font-family="Arial" text-anchor="middle">AIR PASSES THROUGH / ACROSS COIL</text>
+  <rect x="140" y="410" width="280" height="160" rx="14" fill="#1a2228" stroke="#d68b45" stroke-width="3"/>
+  <text x="280" y="438" fill="#f2f5f0" font-size="15" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700">COPPER COOLING COIL</text>
+  <path d="M170 480 C200 450 230 510 260 480 C290 450 320 510 350 480 C380 450 400 490 400 480" fill="none" stroke="#d68b45" stroke-width="8" stroke-linecap="round"/>
+  <path d="M170 520 C200 490 230 550 260 520 C290 490 320 550 350 520 C380 490 400 530 400 520" fill="none" stroke="#c47a38" stroke-width="8" stroke-linecap="round"/>
+  <text x="280" y="555" fill="#8a9a90" font-size="11" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">liquid-to-air heat exchanger · do not fully block prop disc</text>
 
-  <!-- airflow through coil -->
-  <g stroke="#55d6be" stroke-width="5" fill="none">
-    <path d="M350 455 L350 505"/>
-    <path d="M350 705 L350 770"/>
+  <!-- Cooled air out -->
+  <line x1="280" y1="575" x2="280" y2="640" stroke="#55d6be" stroke-width="4" marker-end="url(#arrowGreen)"/>
+  <text x="280" y="665" fill="#55d6be" font-size="14" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700">COOLED AIRFLOW</text>
+  <text x="280" y="685" fill="#8a9a90" font-size="12" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">→ occupant</text>
+
+  <!-- ========== MOTOR 2 COLUMN ========== -->
+  <text x="1320" y="150" fill="#8ed0ff" font-size="13" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700" letter-spacing="1">MOTOR 2 — NORMAL PATH</text>
+
+  <circle cx="1320" cy="230" r="58" fill="#1a2228" stroke="#e8efe9" stroke-width="3"/>
+  <circle cx="1320" cy="230" r="16" fill="#0a0e12" stroke="#e8efe9" stroke-width="2"/>
+  <g stroke="#8ed0ff" stroke-width="7" fill="none" stroke-linecap="round">
+    <path d="M1320 210 C1260 175 1240 195 1285 225"/>
+    <path d="M1340 230 C1380 170 1365 145 1335 195"/>
+    <path d="M1320 250 C1380 285 1400 265 1355 235"/>
+    <path d="M1300 230 C1260 290 1275 315 1305 265"/>
   </g>
-  <g fill="#55d6be">
-    <path d="M350 515 l-12 -22 h24 z"/>
-    <path d="M350 780 l-12 -22 h24 z"/>
-  </g>
-  <text x="350" y="810" fill="#55d6be" font-size="19" font-family="Arial" text-anchor="middle">COOLED AIR → OCCUPANT</text>
+  <text x="1320" y="310" fill="#f2f5f0" font-size="15" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700">2312 920KV CW</text>
+  <text x="1320" y="328" fill="#8a9a90" font-size="12" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">PROP · ESC #2 · GPIO 5</text>
+
+  <line x1="1320" y1="340" x2="1320" y2="520" stroke="#55d6be" stroke-width="4" marker-end="url(#arrowGreen)"/>
+  <text x="1320" y="555" fill="#55d6be" font-size="14" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700">NORMAL AIRFLOW</text>
+  <text x="1320" y="575" fill="#8a9a90" font-size="12" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">→ occupant</text>
+
+  <!-- Person icon area -->
+  <ellipse cx="800" cy="720" rx="120" ry="18" fill="#1a2228" stroke="#3a4550" stroke-width="2"/>
+  <circle cx="800" cy="680" r="22" fill="#2a3530" stroke="#5ecf8a" stroke-width="2"/>
+  <text x="800" y="760" fill="#8a9a90" font-size="13" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">PERSON / BED</text>
+
+  <!-- converging airflow hints -->
+  <path d="M320 690 Q500 710 680 720" fill="none" stroke="#55d6be" stroke-width="2" stroke-dasharray="6 4" opacity="0.6"/>
+  <path d="M1280 590 Q1100 680 920 720" fill="none" stroke="#55d6be" stroke-width="2" stroke-dasharray="6 4" opacity="0.6"/>
+
+  <!-- ========== CENTER: PELTIER + HOT SIDE ========== -->
+  <text x="800" y="150" fill="#ff8a5c" font-size="13" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700" letter-spacing="1">THERMOELECTRIC STAGE</text>
+
+  <!-- Hot side -->
+  <rect x="680" y="170" width="240" height="90" rx="12" fill="#2a1e1a" stroke="#ff8a5c" stroke-width="3"/>
+  <text x="800" y="205" fill="#f2f5f0" font-size="15" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700">HOT-SIDE HEATSINK + FAN</text>
+  <text x="800" y="228" fill="#ff8a5c" font-size="12" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">exhaust heat away from cold path</text>
+  <text x="800" y="248" fill="#8a9a90" font-size="11" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">major thermal bottleneck</text>
+
+  <line x1="800" y1="265" x2="800" y2="295" stroke="#ff8a5c" stroke-width="3" marker-end="url(#arrowHot)"/>
 
   <!-- Peltier -->
-  <rect x="600" y="515" width="200" height="120" rx="12" fill="#20262d" stroke="#ff6b6b" stroke-width="4"/>
-  <text x="700" y="550" fill="#ffffff" font-size="22" font-family="Arial" text-anchor="middle" font-weight="700">PELTIER</text>
-  <text x="700" y="580" fill="#ffffff" font-size="19" font-family="Arial" text-anchor="middle">12 V / ~2 A</text>
-  <text x="700" y="610" fill="#8ed0ff" font-size="17" font-family="Arial" text-anchor="middle">COLD SIDE → coolant</text>
+  <rect x="700" y="300" width="200" height="70" rx="10" fill="#2a1e1a" stroke="#e85d5d" stroke-width="3"/>
+  <text x="800" y="330" fill="#f2f5f0" font-size="16" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700">PELTIER / TEC</text>
+  <text x="800" y="352" fill="#8a9a90" font-size="12" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">~12 V · ~2 A class · GPIO 7 driver</text>
 
-  <!-- Hot side heatsink -->
-  <rect x="610" y="250" width="180" height="130" rx="10" fill="#2a2020" stroke="#ff8b6b" stroke-width="4"/>
-  <text x="700" y="285" fill="#ffffff" font-size="21" font-family="Arial" text-anchor="middle" font-weight="700">HOT-SIDE</text>
-  <text x="700" y="315" fill="#ffffff" font-size="20" font-family="Arial" text-anchor="middle">ALUMINIUM</text>
-  <text x="700" y="345" fill="#ffffff" font-size="20" font-family="Arial" text-anchor="middle">HEATSINK + FAN</text>
-  <path d="M700 390 L700 505" stroke="#ff8b6b" stroke-width="5"/>
-  <path d="M700 505 l-12 -22 h24 z" fill="#ff8b6b"/>
-  <text x="830" y="330" fill="#ff8b6b" font-size="18" font-family="Arial">HOT AIR EXHAUST</text>
+  <line x1="800" y1="375" x2="800" y2="405" stroke="#8ed0ff" stroke-width="3" marker-end="url(#arrowBlue)"/>
 
+  <!-- Cold block -->
+  <rect x="700" y="410" width="200" height="55" rx="10" fill="#1a2830" stroke="#3d9eff" stroke-width="3"/>
+  <text x="800" y="435" fill="#f2f5f0" font-size="14" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700">COLD-SIDE BLOCK</text>
+  <text x="800" y="453" fill="#8a9a90" font-size="11" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">copper / aluminium</text>
+
+  <!-- ========== COOLANT LOOP ========== -->
   <!-- Pump -->
-  <rect x="940" y="545" width="190" height="100" rx="15" fill="#171b20" stroke="#8ed0ff" stroke-width="4"/>
-  <text x="1035" y="580" fill="#ffffff" font-size="21" font-family="Arial" text-anchor="middle" font-weight="700">MINI WATER PUMP</text>
-  <text x="1035" y="610" fill="#aab4c0" font-size="17" font-family="Arial" text-anchor="middle">closed coolant loop</text>
+  <rect x="1000" y="400" width="160" height="70" rx="12" fill="#1a2830" stroke="#8ed0ff" stroke-width="3"/>
+  <text x="1080" y="430" fill="#f2f5f0" font-size="14" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700">12 V PUMP</text>
+  <text x="1080" y="450" fill="#8a9a90" font-size="11" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">GPIO 6 driver</text>
 
-  <!-- Tubing loop -->
-  <path d="M800 575 C850 575 875 575 940 575" fill="none" stroke="#8ed0ff" stroke-width="6"/>
-  <path d="M1130 610 C1190 610 1200 740 1080 740 C930 740 790 740 490 630" fill="none" stroke="#8ed0ff" stroke-width="6"/>
-  <path d="M490 630 C540 620 570 600 600 575" fill="none" stroke="#8ed0ff" stroke-width="6"/>
-  <text x="850" y="560" fill="#8ed0ff" font-size="17" font-family="Arial">COOLANT OUT</text>
-  <text x="770" y="720" fill="#8ed0ff" font-size="17" font-family="Arial">PLASTIC TUBE RETURN</text>
+  <!-- Reservoir -->
+  <rect x="520" y="400" width="140" height="70" rx="12" fill="#1a2228" stroke="#8ed0ff" stroke-width="2" stroke-dasharray="4 3"/>
+  <text x="590" y="430" fill="#f2f5f0" font-size="13" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700">RESERVOIR</text>
+  <text x="590" y="450" fill="#8a9a90" font-size="11" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">sealed coolant</text>
 
-  <!-- ESP32 -->
-  <rect x="1010" y="735" width="160" height="75" rx="10" fill="#17251e" stroke="#55d6be" stroke-width="3"/>
-  <text x="1090" y="765" fill="#ffffff" font-size="19" font-family="Arial" text-anchor="middle">ESP32-C3</text>
-  <text x="1090" y="790" fill="#aab4c0" font-size="15" font-family="Arial" text-anchor="middle">Wi-Fi control</text>
+  <!-- Coolant pipes: cold block to pump to coil to reservoir to cold block -->
+  <!-- cold block -> pump -->
+  <path d="M900 438 H1000" fill="none" stroke="#8ed0ff" stroke-width="4" marker-end="url(#arrowBlue)"/>
+  <!-- pump -> coil (right side of coil) -->
+  <path d="M1160 435 H1220 V500 H420 V490" fill="none" stroke="#8ed0ff" stroke-width="4"/>
+  <text x="1205" y="470" fill="#8ed0ff" font-size="11" font-family="Segoe UI, Arial, sans-serif">coolant to coil</text>
+  <!-- coil left -> reservoir -->
+  <path d="M140 490 H100 V438 H520" fill="none" stroke="#6bb8e8" stroke-width="4"/>
+  <text x="180" y="478" fill="#6bb8e8" font-size="11" font-family="Segoe UI, Arial, sans-serif">return</text>
+  <!-- reservoir -> cold block -->
+  <path d="M660 435 H700" fill="none" stroke="#6bb8e8" stroke-width="4" marker-end="url(#arrowBlue)"/>
 
-  <!-- External PSU -->
-  <rect x="80" y="740" width="260" height="90" rx="12" fill="#202020" stroke="#ffffff" stroke-width="3"/>
-  <text x="210" y="775" fill="#ffffff" font-size="21" font-family="Arial" text-anchor="middle">12 V / 50 A / 600 W</text>
-  <text x="210" y="802" fill="#aab4c0" font-size="17" font-family="Arial" text-anchor="middle">EXTERNAL SMPS</text>
-  <text x="360" y="775" fill="#ffffff" font-size="16" font-family="Arial">→ stays outside</text>
+  <!-- Sequence note box -->
+  <rect x="520" y="500" width="560" height="95" rx="12" fill="#161c19" stroke="#2a3330" stroke-width="2"/>
+  <text x="800" y="528" fill="#f2f5f0" font-size="14" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700">FIRMWARE COOLING SEQUENCE</text>
+  <text x="800" y="552" fill="#5ecf8a" font-size="13" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">1. Motor 1 running ≥ 20%   2. Pump ON   3. Wait ~2 s (prime)   4. TEC ON</text>
+  <text x="800" y="575" fill="#8a9a90" font-size="12" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">STOP / failsafe / Motor 1 low → TEC OFF + pump OFF · No auto-restart after failsafe</text>
 
-  <!-- notes -->
-  <text x="700" y="870" fill="#aab4c0" font-size="16" font-family="Arial" text-anchor="middle">Prototype note: verify coolant flow, coil pressure drop, hot-side temperature, condensation and actual motor current.</text>
+  <!-- ========== BOTTOM: POWER + CONTROL ========== -->
+  <rect x="80" y="800" width="320" height="100" rx="12" fill="#1a1a1a" stroke="#e8efe9" stroke-width="2"/>
+  <text x="240" y="835" fill="#f2f5f0" font-size="15" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700">12 V / 50 A / 600 W SMPS</text>
+  <text x="240" y="858" fill="#8a9a90" font-size="12" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">EXTERNAL — not on hanging assembly</text>
+  <text x="240" y="880" fill="#8a9a90" font-size="12" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">fuse · master switch · AC outside</text>
+
+  <rect x="440" y="800" width="280" height="100" rx="12" fill="#17251e" stroke="#5ecf8a" stroke-width="2"/>
+  <text x="580" y="835" fill="#f2f5f0" font-size="15" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700">ESP32-C3 CONTROLLER</text>
+  <text x="580" y="858" fill="#8a9a90" font-size="12" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">SoftAP AirNode-Duo · 192.168.4.1</text>
+  <text x="580" y="880" fill="#8a9a90" font-size="12" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">12 V → 5 V buck · local web UI</text>
+
+  <rect x="760" y="800" width="360" height="100" rx="12" fill="#1a2228" stroke="#d68b45" stroke-width="2"/>
+  <text x="940" y="835" fill="#f2f5f0" font-size="15" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700">DESIGN PHILOSOPHY</text>
+  <text x="940" y="858" fill="#8a9a90" font-size="12" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">Peltier cools coolant — not room air directly</text>
+  <text x="940" y="880" fill="#8a9a90" font-size="12" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">“Cool the person, not the room”</text>
+
+  <rect x="1160" y="800" width="360" height="100" rx="12" fill="#2a1e1a" stroke="#e85d5d" stroke-width="2"/>
+  <text x="1340" y="835" fill="#f2f5f0" font-size="15" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="700">PROTOTYPE CAUTIONS</text>
+  <text x="1340" y="858" fill="#8a9a90" font-size="11" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">Measure current · hot-side temp · flow</text>
+  <text x="1340" y="880" fill="#8a9a90" font-size="11" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">Watch condensation · sealed fittings</text>
+
+  <!-- Footer -->
+  <text x="800" y="960" fill="#5a6570" font-size="12" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">Concept diagram — not a wiring schematic · GPIO 6/7 drive MOSFET stages only · Remove propellers for first ESC tests</text>
+  <text x="800" y="985" fill="#5a6570" font-size="12" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">AirNode Duo · hardware/concept/airnode-duo-thermoelectric-cooling.svg</text>
+
+  <!-- Legend -->
+  <g transform="translate(80, 1020)">
+    <line x1="0" y1="0" x2="40" y2="0" stroke="#55d6be" stroke-width="4"/>
+    <text x="50" y="4" fill="#8a9a90" font-size="12" font-family="Segoe UI, Arial, sans-serif">Airflow</text>
+    <line x1="140" y1="0" x2="180" y2="0" stroke="#8ed0ff" stroke-width="4"/>
+    <text x="190" y="4" fill="#8a9a90" font-size="12" font-family="Segoe UI, Arial, sans-serif">Coolant</text>
+    <line x1="280" y1="0" x2="320" y2="0" stroke="#ff8a5c" stroke-width="4"/>
+    <text x="330" y="4" fill="#8a9a90" font-size="12" font-family="Segoe UI, Arial, sans-serif">Heat reject</text>
+    <line x1="440" y1="0" x2="480" y2="0" stroke="#d68b45" stroke-width="4"/>
+    <text x="490" y="4" fill="#8a9a90" font-size="12" font-family="Segoe UI, Arial, sans-serif">Copper coil</text>
+  </g>
 </svg>
