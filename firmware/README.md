@@ -42,6 +42,14 @@ Verify against your board. Drivers only — never load GPIO directly with pump/P
 
 ---
 
+## PWM compatibility
+
+The ESC outputs use **50 Hz servo-style PWM** with **14-bit LEDC resolution** on ESP32-C3.
+
+The implementation supports the current Arduino-ESP32 3.x LEDC API (`ledcAttach` / pin-based `ledcWrite`) and retains a compatibility path for Arduino-ESP32 2.x.
+
+If LEDC initialization fails, the firmware locks the motor outputs off and does not arm the controller.
+
 ## API
 
 | Method | Path | Body / notes |
@@ -85,5 +93,7 @@ src/
 7. Cooling: Motor 1 ≥ 20% → COOLING ON → pump then TEC after ~2 s.  
 
 Software failsafe is not a substitute for a physical emergency disconnect.
+
+**Build status:** use the GitHub Actions workflow as the authoritative compile check; this document does not claim a successful build until CI reports one.
 
 Only after this passes should propellers and loaded tests begin (see root README).
