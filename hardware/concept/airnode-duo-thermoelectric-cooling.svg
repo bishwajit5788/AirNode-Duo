@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+  <rect width="1400" height="900" fill="#0b0d10"/>
+  <text x="700" y="58" fill="#ffffff" font-size="34" font-family="Arial" text-anchor="middle" font-weight="700">AirNode Duo — Thermoelectric Liquid-to-Air Cooling Concept</text>
+  <text x="700" y="94" fill="#aab4c0" font-size="20" font-family="Arial" text-anchor="middle">Motor 1 drives airflow across a copper coolant coil; Motor 2 provides independent airflow.</text>
+
+  <!-- roof/frame -->
+  <line x1="120" y1="155" x2="1280" y2="155" stroke="#66707a" stroke-width="5"/>
+  <text x="700" y="140" fill="#aab4c0" font-size="18" font-family="Arial" text-anchor="middle">MOSQUITO NET / TENT ROOF</text>
+
+  <!-- Motor 1 -->
+  <circle cx="350" cy="245" r="72" fill="#171b20" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="350" cy="245" r="20" fill="#0b0d10" stroke="#ffffff" stroke-width="3"/>
+  <text x="350" y="345" fill="#ffffff" font-size="22" font-family="Arial" text-anchor="middle">2312 920KV</text>
+  <text x="350" y="374" fill="#aab4c0" font-size="19" font-family="Arial" text-anchor="middle">MOTOR 1 • CW</text>
+
+  <!-- prop blades -->
+  <path d="M350 225 C270 175 225 195 285 235 C315 255 330 255 350 245" fill="none" stroke="#8ed0ff" stroke-width="8"/>
+  <path d="M370 245 C420 165 400 125 360 190 C345 215 345 230 350 245" fill="none" stroke="#8ed0ff" stroke-width="8"/>
+  <path d="M350 265 C430 315 475 295 415 255 C385 235 370 235 350 245" fill="none" stroke="#8ed0ff" stroke-width="8"/>
+  <path d="M330 245 C280 325 300 365 340 300 C355 275 355 260 350 245" fill="none" stroke="#8ed0ff" stroke-width="8"/>
+
+  <!-- Motor 2 -->
+  <circle cx="1050" cy="245" r="72" fill="#171b20" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="1050" cy="245" r="20" fill="#0b0d10" stroke="#ffffff" stroke-width="3"/>
+  <text x="1050" y="345" fill="#ffffff" font-size="22" font-family="Arial" text-anchor="middle">2312 920KV</text>
+  <text x="1050" y="374" fill="#aab4c0" font-size="19" font-family="Arial" text-anchor="middle">MOTOR 2 • CW</text>
+
+  <!-- airflow arrows -->
+  <g stroke="#55d6be" stroke-width="6" fill="none">
+    <path d="M350 325 L350 445"/>
+    <path d="M1050 325 L1050 445"/>
+  </g>
+  <g fill="#55d6be">
+    <path d="M350 455 l-13 -25 h26 z"/>
+    <path d="M1050 455 l-13 -25 h26 z"/>
+  </g>
+  <text x="350" y="485" fill="#55d6be" font-size="18" font-family="Arial" text-anchor="middle">AIRFLOW</text>
+  <text x="1050" y="485" fill="#55d6be" font-size="18" font-family="Arial" text-anchor="middle">NORMAL AIRFLOW</text>
+
+  <!-- Copper coil -->
+  <rect x="210" y="510" width="280" height="190" rx="20" fill="#171b20" stroke="#d68b45" stroke-width="4"/>
+  <text x="350" y="540" fill="#ffffff" font-size="22" font-family="Arial" text-anchor="middle" font-weight="700">COPPER COOLING COIL</text>
+  <path d="M245 585 C285 545 325 625 365 585 C405 545 445 625 475 585" fill="none" stroke="#d68b45" stroke-width="9"/>
+  <path d="M245 630 C285 590 325 670 365 630 C405 590 445 670 475 630" fill="none" stroke="#d68b45" stroke-width="9"/>
+  <text x="350" y="680" fill="#aab4c0" font-size="16" font-family="Arial" text-anchor="middle">AIR PASSES THROUGH / ACROSS COIL</text>
+
+  <!-- airflow through coil -->
+  <g stroke="#55d6be" stroke-width="5" fill="none">
+    <path d="M350 455 L350 505"/>
+    <path d="M350 705 L350 770"/>
+  </g>
+  <g fill="#55d6be">
+    <path d="M350 515 l-12 -22 h24 z"/>
+    <path d="M350 780 l-12 -22 h24 z"/>
+  </g>
+  <text x="350" y="810" fill="#55d6be" font-size="19" font-family="Arial" text-anchor="middle">COOLED AIR → OCCUPANT</text>
+
+  <!-- Peltier -->
+  <rect x="600" y="515" width="200" height="120" rx="12" fill="#20262d" stroke="#ff6b6b" stroke-width="4"/>
+  <text x="700" y="550" fill="#ffffff" font-size="22" font-family="Arial" text-anchor="middle" font-weight="700">PELTIER</text>
+  <text x="700" y="580" fill="#ffffff" font-size="19" font-family="Arial" text-anchor="middle">12 V / ~2 A</text>
+  <text x="700" y="610" fill="#8ed0ff" font-size="17" font-family="Arial" text-anchor="middle">COLD SIDE → coolant</text>
+
+  <!-- Hot side heatsink -->
+  <rect x="610" y="250" width="180" height="130" rx="10" fill="#2a2020" stroke="#ff8b6b" stroke-width="4"/>
+  <text x="700" y="285" fill="#ffffff" font-size="21" font-family="Arial" text-anchor="middle" font-weight="700">HOT-SIDE</text>
+  <text x="700" y="315" fill="#ffffff" font-size="20" font-family="Arial" text-anchor="middle">ALUMINIUM</text>
+  <text x="700" y="345" fill="#ffffff" font-size="20" font-family="Arial" text-anchor="middle">HEATSINK + FAN</text>
+  <path d="M700 390 L700 505" stroke="#ff8b6b" stroke-width="5"/>
+  <path d="M700 505 l-12 -22 h24 z" fill="#ff8b6b"/>
+  <text x="830" y="330" fill="#ff8b6b" font-size="18" font-family="Arial">HOT AIR EXHAUST</text>
+
+  <!-- Pump -->
+  <rect x="940" y="545" width="190" height="100" rx="15" fill="#171b20" stroke="#8ed0ff" stroke-width="4"/>
+  <text x="1035" y="580" fill="#ffffff" font-size="21" font-family="Arial" text-anchor="middle" font-weight="700">MINI WATER PUMP</text>
+  <text x="1035" y="610" fill="#aab4c0" font-size="17" font-family="Arial" text-anchor="middle">closed coolant loop</text>
+
+  <!-- Tubing loop -->
+  <path d="M800 575 C850 575 875 575 940 575" fill="none" stroke="#8ed0ff" stroke-width="6"/>
+  <path d="M1130 610 C1190 610 1200 740 1080 740 C930 740 790 740 490 630" fill="none" stroke="#8ed0ff" stroke-width="6"/>
+  <path d="M490 630 C540 620 570 600 600 575" fill="none" stroke="#8ed0ff" stroke-width="6"/>
+  <text x="850" y="560" fill="#8ed0ff" font-size="17" font-family="Arial">COOLANT OUT</text>
+  <text x="770" y="720" fill="#8ed0ff" font-size="17" font-family="Arial">PLASTIC TUBE RETURN</text>
+
+  <!-- ESP32 -->
+  <rect x="1010" y="735" width="160" height="75" rx="10" fill="#17251e" stroke="#55d6be" stroke-width="3"/>
+  <text x="1090" y="765" fill="#ffffff" font-size="19" font-family="Arial" text-anchor="middle">ESP32-C3</text>
+  <text x="1090" y="790" fill="#aab4c0" font-size="15" font-family="Arial" text-anchor="middle">Wi-Fi control</text>
+
+  <!-- External PSU -->
+  <rect x="80" y="740" width="260" height="90" rx="12" fill="#202020" stroke="#ffffff" stroke-width="3"/>
+  <text x="210" y="775" fill="#ffffff" font-size="21" font-family="Arial" text-anchor="middle">12 V / 50 A / 600 W</text>
+  <text x="210" y="802" fill="#aab4c0" font-size="17" font-family="Arial" text-anchor="middle">EXTERNAL SMPS</text>
+  <text x="360" y="775" fill="#ffffff" font-size="16" font-family="Arial">→ stays outside</text>
+
+  <!-- notes -->
+  <text x="700" y="870" fill="#aab4c0" font-size="16" font-family="Arial" text-anchor="middle">Prototype note: verify coolant flow, coil pressure drop, hot-side temperature, condensation and actual motor current.</text>
+</svg>
