@@ -2,13 +2,10 @@
 
 namespace MotorControl {
 
-#if defined(ESP_ARDUINO_VERSION_MAJOR) && (ESP_ARDUINO_VERSION_MAJOR >= 3)
-// Arduino-ESP32 3.x: LEDC channels are assigned to pins automatically.
-#else
-// Arduino-ESP32 2.x compatibility.
+// Stable logical channel IDs are retained for Arduino-ESP32 2.x compatibility.
+// Arduino-ESP32 3.x assigns the physical LEDC channel automatically.
 static const uint8_t CH_ESC1 = 0;
 static const uint8_t CH_ESC2 = 1;
-#endif
 
 static uint8_t s_m1Target = 0;
 static uint8_t s_m2Target = 0;
