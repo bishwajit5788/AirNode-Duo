@@ -43,39 +43,63 @@ static void sendStatus() {
   server.send(200, "application/json", statusJson());
 }
 
+static String portalUrl() {
+  return String("http://") + WifiManager::apIp().toString() + "/";
+}
+
 static void handleRoot() {
   noCache();
   server.send_P(200, "text/html", INDEX_HTML);
 }
 
-// Serve portal page so phone captive UI has something to display.
+// Full control UI — used when the captive browser can display HTML.
 static void handlePortalPage() {
   noCache();
+  server.sendHeader("Connection", "close");
   server.send_P(200, "text/html", INDEX_HTML);
 }
 
-static void handleCaptiveRedirect() {
+// HTTP 302 to the portal. Android often opens the Location URL in a captive sheet.
+static void handleCaptive302() {
   noCache();
-  server.sendHeader("Location", String("http://") + WifiManager::apIp().toString() + "/", true);
-  server.send(302, "text/plain", "Redirecting to AirNode Duo");
+  server.sendHeader("Connection", "close");
+  server.sendHeader("Location", portalUrl(), true);
+  server.send(302, "text/plain", "");
 }
 
-// Android connectivity check: redirect into portal (opens captive sheet on many devices).
+// 200 + meta-refresh + link. More reliable than bare 302 inside many captive WebViews.
+static void handleCaptiveMetaRedirect() {
+  noCache();
+  server.sendHeader("Connection", "close");
+  const String url = portalUrl();
+  String html;
+  html.reserve(384);
+  html += F("<!DOCTYPE html><html><head><meta charset=\"utf-8\">");
+  html += F("<meta http-equiv=\"refresh\" content=\"0;url=");
+  html += url;
+  html += F("\"><title>AirNode Duo</title></head><body style=\"font-family:system-ui;background:#0d1110;color:#e8efe9;text-align:center;padding:48px\">");
+  html += F("<p>Opening AirNode Duo…</p><p><a style=\"color:#5ecf8a\" href=\"");
+  html += url;
+  html += F("\">Open control panel</a></p></body></html>");
+  server.send(200, "text/html", html);
+}
+
+// Android: non-204 response triggers captive portal; Location is the page to open.
 static void handleGenerate204() {
-  handleCaptiveRedirect();
+  handleCaptive302();
 }
 
-// Apple captive network: serve portal HTML (detection fails closed → login sheet).
+// Apple / generic: serve the real UI so the captive sheet is immediately usable.
 static void handleHotspotDetect() {
   handlePortalPage();
 }
 
 static void handleConnectTest() {
-  handleCaptiveRedirect();
+  handleCaptiveMetaRedirect();
 }
 
 static void handleNcsi() {
-  handleCaptiveRedirect();
+  handleCaptiveMetaRedirect();
 }
 
 static void handleCanonical() {
@@ -84,6 +108,21 @@ static void handleCanonical() {
 
 static void handleSuccess() {
   handlePortalPage();
+}
+
+// Unknown paths: never leave the captive browser on an empty error page.
+static void handleNotFound() {
+  if (server.uri().startsWith("/api/")) {
+    noCache();
+    server.send(404, "application/json", "{\"error\":\"not found\"}");
+    return;
+  }
+  // Prefer showing the control UI directly (avoids redirect loops / ignored 302s).
+  if (server.method() == HTTP_GET) {
+    handlePortalPage();
+    return;
+  }
+  handleCaptive302();
 }
 
 static bool parseUint0_100(const String& s, uint8_t& out) {
@@ -280,19 +319,24 @@ void begin() {
   server.on("/api/heartbeat", HTTP_POST, handleHeartbeat);
   server.on("/api/cooling", HTTP_POST, handleCooling);
 
-  // Captive-portal detection — redirect or serve portal so OS shows sheet
+  // Captive-portal detection (DNS already maps unknown hosts → 192.168.4.1)
   server.on("/generate_204", HTTP_GET, handleGenerate204);
   server.on("/gen_204", HTTP_GET, handleGenerate204);
+  server.on("/generate204", HTTP_GET, handleGenerate204);
   server.on("/hotspot-detect.html", HTTP_GET, handleHotspotDetect);
   server.on("/library/test/success.html", HTTP_GET, handleHotspotDetect);
   server.on("/connecttest.txt", HTTP_GET, handleConnectTest);
   server.on("/ncsi.txt", HTTP_GET, handleNcsi);
   server.on("/canonical.html", HTTP_GET, handleCanonical);
   server.on("/success.txt", HTTP_GET, handleSuccess);
-  server.on("/fwlink", HTTP_GET, handleCaptiveRedirect);
-  server.on("/redirect", HTTP_GET, handleCaptiveRedirect);
+  server.on("/fwlink", HTTP_GET, handleCaptive302);
+  server.on("/redirect", HTTP_GET, handleCaptiveMetaRedirect);
+  // Extra probes used by some Android / Kindle / Windows builds
+  server.on("/mobile/status.php", HTTP_GET, handleCaptive302);
+  server.on("/kindle-wifi/wifistub.html", HTTP_GET, handlePortalPage);
+  server.on("/check_network_status.txt", HTTP_GET, handleCaptiveMetaRedirect);
 
-  server.onNotFound(handleCaptiveRedirect);
+  server.onNotFound(handleNotFound);
   server.begin();
 }
 
