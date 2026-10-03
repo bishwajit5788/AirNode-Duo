@@ -61,7 +61,7 @@ If LEDC initialization fails, the firmware locks the motor outputs off and does 
 | POST | `/api/control` | `m1=0..100&m2=0..100` |
 | POST | `/api/master` | `speed=0..100` |
 | POST | `/api/heartbeat` | ~500 ms from browser |
-| POST | `/api/cooling` | `on=0` or `on=1` |
+| POST | `/api/cooling` | `cooling=0..100` or `on=0|1` (also JSON) |
 
 Failsafe: no valid control for **1.5 s** while running → stop motors and cooling; no auto-restart.
 

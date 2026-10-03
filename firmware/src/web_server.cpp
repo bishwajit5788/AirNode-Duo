@@ -12,6 +12,11 @@ namespace WebServerApp {
 
 static WebServer server(80);
 
+static void noCache() {
+  server.sendHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+  server.sendHeader("Pragma", "no-cache");
+}
+
 static String statusJson() {
   JsonDocument doc;
   doc["armed"] = MotorControl::isArmed();
@@ -21,10 +26,12 @@ static String statusJson() {
   doc["motor1_applied"] = MotorControl::motor1Applied();
   doc["motor2_target"] = MotorControl::motor2Target();
   doc["motor2_applied"] = MotorControl::motor2Applied();
+  doc["cooling_target"] = CoolingControl::level();
   doc["cooling_requested"] = CoolingControl::isRequested();
   doc["pump"] = CoolingControl::isPumpOn();
   doc["tec"] = CoolingControl::isTecOn();
   doc["clients"] = WifiManager::clientCount();
+  doc["wifi_clients"] = WifiManager::clientCount();
   doc["ip"] = WifiManager::apIp().toString();
   String out;
   serializeJson(doc, out);
@@ -32,26 +39,35 @@ static String statusJson() {
 }
 
 static void sendStatus() {
+  noCache();
   server.send(200, "application/json", statusJson());
 }
 
 static void handleRoot() {
+  noCache();
+  server.send_P(200, "text/html", INDEX_HTML);
+}
+
+// Serve portal page so phone captive UI has something to display.
+static void handlePortalPage() {
+  noCache();
   server.send_P(200, "text/html", INDEX_HTML);
 }
 
 static void handleCaptiveRedirect() {
+  noCache();
   server.sendHeader("Location", String("http://") + WifiManager::apIp().toString() + "/", true);
-  server.send(302, "text/plain", "AirNode Duo");
+  server.send(302, "text/plain", "Redirecting to AirNode Duo");
 }
 
-// Android: expect 204; redirect still works for captive portal popup
+// Android connectivity check: redirect into portal (opens captive sheet on many devices).
 static void handleGenerate204() {
   handleCaptiveRedirect();
 }
 
+// Apple captive network: serve portal HTML (detection fails closed → login sheet).
 static void handleHotspotDetect() {
-  // Apple: serve success-like content or redirect
-  handleCaptiveRedirect();
+  handlePortalPage();
 }
 
 static void handleConnectTest() {
@@ -59,21 +75,19 @@ static void handleConnectTest() {
 }
 
 static void handleNcsi() {
-  // Windows NCSI
   handleCaptiveRedirect();
 }
 
 static void handleCanonical() {
-  handleCaptiveRedirect();
+  handlePortalPage();
 }
 
 static void handleSuccess() {
-  handleCaptiveRedirect();
+  handlePortalPage();
 }
 
 static bool parseUint0_100(const String& s, uint8_t& out) {
   if (s.length() == 0) return false;
-  // Reject non-numeric / negative
   for (size_t i = 0; i < s.length(); i++) {
     if (s[i] < '0' || s[i] > '9') return false;
   }
@@ -83,14 +97,51 @@ static bool parseUint0_100(const String& s, uint8_t& out) {
   return true;
 }
 
+// Prefer form args; fall back to JSON body (application/json or plain).
+static bool loadJsonBody(JsonDocument& doc) {
+  if (!server.hasArg("plain")) return false;
+  const String& body = server.arg("plain");
+  if (body.length() == 0) return false;
+  DeserializationError err = deserializeJson(doc, body);
+  return !err;
+}
+
 static void handleControl() {
-  if (!server.hasArg("m1") || !server.hasArg("m2")) {
-    server.send(400, "application/json", "{\"error\":\"m1 and m2 required (0..100)\"}");
-    return;
+  uint8_t m1 = 0, m2 = 0;
+  bool got = false;
+
+  if (server.hasArg("m1") && server.hasArg("m2")) {
+    if (!parseUint0_100(server.arg("m1"), m1) || !parseUint0_100(server.arg("m2"), m2)) {
+      server.send(400, "application/json", "{\"error\":\"m1 and m2 must be 0..100\"}");
+      return;
+    }
+    got = true;
+  } else {
+    JsonDocument doc;
+    if (loadJsonBody(doc)) {
+      if (!doc["motor1"].is<int>() && !doc["m1"].is<int>()) {
+        server.send(400, "application/json", "{\"error\":\"motor1/m1 required\"}");
+        return;
+      }
+      int v1 = doc["motor1"].is<int>() ? doc["motor1"].as<int>() : doc["m1"].as<int>();
+      int v2 = doc["motor2"].is<int>() ? doc["motor2"].as<int>()
+               : (doc["m2"].is<int>() ? doc["m2"].as<int>() : -1);
+      if (v2 < 0) {
+        server.send(400, "application/json", "{\"error\":\"motor2/m2 required\"}");
+        return;
+      }
+      if (v1 < 0 || v1 > 100 || v2 < 0 || v2 > 100) {
+        server.send(400, "application/json", "{\"error\":\"motor values must be 0..100\"}");
+        return;
+      }
+      m1 = (uint8_t)v1;
+      m2 = (uint8_t)v2;
+      got = true;
+    }
   }
-  uint8_t m1, m2;
-  if (!parseUint0_100(server.arg("m1"), m1) || !parseUint0_100(server.arg("m2"), m2)) {
-    server.send(400, "application/json", "{\"error\":\"m1 and m2 must be 0..100\"}");
+
+  if (!got) {
+    server.send(400, "application/json", "{\"error\":\"m1/m2 form or JSON motor1/motor2 required\"}");
     return;
   }
 
@@ -102,17 +153,36 @@ static void handleControl() {
   }
 
   MotorControl::setTargets(m1, m2);
+  noCache();
   server.send(200, "application/json", statusJson());
 }
 
 static void handleMaster() {
-  if (!server.hasArg("speed")) {
-    server.send(400, "application/json", "{\"error\":\"speed=0..100 required\"}");
-    return;
+  uint8_t sp = 0;
+  bool got = false;
+
+  if (server.hasArg("speed")) {
+    if (!parseUint0_100(server.arg("speed"), sp)) {
+      server.send(400, "application/json", "{\"error\":\"speed must be 0..100\"}");
+      return;
+    }
+    got = true;
+  } else {
+    JsonDocument doc;
+    if (loadJsonBody(doc)) {
+      int v = doc["master"].is<int>() ? doc["master"].as<int>()
+              : (doc["speed"].is<int>() ? doc["speed"].as<int>() : -1);
+      if (v < 0 || v > 100) {
+        server.send(400, "application/json", "{\"error\":\"master/speed must be 0..100\"}");
+        return;
+      }
+      sp = (uint8_t)v;
+      got = true;
+    }
   }
-  uint8_t sp;
-  if (!parseUint0_100(server.arg("speed"), sp)) {
-    server.send(400, "application/json", "{\"error\":\"speed must be 0..100\"}");
+
+  if (!got) {
+    server.send(400, "application/json", "{\"error\":\"speed= or JSON master required\"}");
     return;
   }
 
@@ -122,6 +192,7 @@ static void handleMaster() {
     return;
   }
   MotorControl::setTargets(sp, sp);
+  noCache();
   server.send(200, "application/json", statusJson());
 }
 
@@ -135,32 +206,67 @@ static void handleStart() {
     return;
   }
   MotorControl::start();
+  noCache();
   server.send(200, "application/json", statusJson());
 }
 
 static void handleStop() {
   MotorControl::stop();
   CoolingControl::forceOff();
+  noCache();
   server.send(200, "application/json", statusJson());
 }
 
 static void handleHeartbeat() {
   MotorControl::touchControl();
+  noCache();
   server.send(200, "application/json", statusJson());
 }
 
 static void handleCooling() {
-  if (!server.hasArg("on")) {
-    server.send(400, "application/json", "{\"error\":\"on=0 or on=1 required\"}");
+  uint8_t level = 0;
+  bool got = false;
+
+  if (server.hasArg("cooling")) {
+    if (!parseUint0_100(server.arg("cooling"), level)) {
+      server.send(400, "application/json", "{\"error\":\"cooling must be 0..100\"}");
+      return;
+    }
+    got = true;
+  } else if (server.hasArg("on")) {
+    String v = server.arg("on");
+    if (v != "0" && v != "1") {
+      server.send(400, "application/json", "{\"error\":\"on=0 or on=1\"}");
+      return;
+    }
+    level = (v == "1") ? 100 : 0;
+    got = true;
+  } else {
+    JsonDocument doc;
+    if (loadJsonBody(doc)) {
+      if (doc["cooling"].is<int>()) {
+        int v = doc["cooling"].as<int>();
+        if (v < 0 || v > 100) {
+          server.send(400, "application/json", "{\"error\":\"cooling must be 0..100\"}");
+          return;
+        }
+        level = (uint8_t)v;
+        got = true;
+      } else if (doc["on"].is<int>() || doc["on"].is<bool>()) {
+        level = doc["on"].as<bool>() || doc["on"].as<int>() ? 100 : 0;
+        got = true;
+      }
+    }
+  }
+
+  if (!got) {
+    server.send(400, "application/json", "{\"error\":\"cooling=0..100 or on=0|1 required\"}");
     return;
   }
-  String v = server.arg("on");
-  if (v != "0" && v != "1") {
-    server.send(400, "application/json", "{\"error\":\"on=0 or on=1 required\"}");
-    return;
-  }
+
   MotorControl::touchControl();
-  CoolingControl::setRequested(v == "1");
+  CoolingControl::setLevel(level);
+  noCache();
   server.send(200, "application/json", statusJson());
 }
 
@@ -174,7 +280,7 @@ void begin() {
   server.on("/api/heartbeat", HTTP_POST, handleHeartbeat);
   server.on("/api/cooling", HTTP_POST, handleCooling);
 
-  // Captive portal detection endpoints
+  // Captive-portal detection — redirect or serve portal so OS shows sheet
   server.on("/generate_204", HTTP_GET, handleGenerate204);
   server.on("/gen_204", HTTP_GET, handleGenerate204);
   server.on("/hotspot-detect.html", HTTP_GET, handleHotspotDetect);
@@ -184,6 +290,7 @@ void begin() {
   server.on("/canonical.html", HTTP_GET, handleCanonical);
   server.on("/success.txt", HTTP_GET, handleSuccess);
   server.on("/fwlink", HTTP_GET, handleCaptiveRedirect);
+  server.on("/redirect", HTTP_GET, handleCaptiveRedirect);
 
   server.onNotFound(handleCaptiveRedirect);
   server.begin();

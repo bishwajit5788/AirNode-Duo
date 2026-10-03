@@ -2,13 +2,13 @@
 
 namespace CoolingControl {
 
-static bool s_requested = false;
+static uint8_t s_level = 0;
 static bool s_pumpOn = false;
 static bool s_tecOn = false;
 static uint32_t s_primeStartMs = 0;
 
 void begin() {
-  s_requested = false;
+  s_level = 0;
   s_pumpOn = false;
   s_tecOn = false;
   s_primeStartMs = 0;
@@ -38,46 +38,51 @@ static void setTec(bool on) {
 }
 
 void forceOff() {
-  s_requested = false;
+  s_level = 0;
   setTec(false);
   setPump(false);
   s_primeStartMs = 0;
 }
 
-void setRequested(bool on) {
-  s_requested = on;
-  if (!on) {
+void setLevel(uint8_t pct) {
+  s_level = constrain(pct, (uint8_t)0, (uint8_t)100);
+  if (s_level == 0) {
     setTec(false);
     setPump(false);
     s_primeStartMs = 0;
   }
 }
 
+void setRequested(bool on) {
+  setLevel(on ? 100 : 0);
+}
+
 void update(bool systemRunning, uint8_t motor1AppliedPct) {
-  // Safety: no cooling unless system is running and Motor 1 has enough airflow
-  if (!s_requested || !systemRunning || motor1AppliedPct < COOLING_MIN_MOTOR1_PCT) {
+  // Safety: no cooling unless requested, system running, and Motor 1 airflow OK.
+  // No flow/temperature sensors on this prototype — interlocks are software only.
+  if (s_level == 0 || !systemRunning || motor1AppliedPct < COOLING_MIN_MOTOR1_PCT) {
     if (s_tecOn) setTec(false);
     if (s_pumpOn) setPump(false);
     s_primeStartMs = 0;
     return;
   }
 
-  // Start pump first
   if (!s_pumpOn) {
     setPump(true);
     s_primeStartMs = millis();
     return;
   }
 
-  // After prime delay, enable TEC
+  // TEC is binary on this hardware (MOSFET driver). Level > 0 only gates enable.
   if (!s_tecOn && (millis() - s_primeStartMs) >= COOLANT_PRIME_MS) {
     setTec(true);
   }
 }
 
-bool isRequested() { return s_requested; }
+uint8_t level() { return s_level; }
+bool isRequested() { return s_level > 0; }
 bool isPumpOn() { return s_pumpOn; }
 bool isTecOn() { return s_tecOn; }
-bool isPriming() { return s_pumpOn && !s_tecOn && s_requested; }
+bool isPriming() { return s_pumpOn && !s_tecOn && s_level > 0; }
 
 }  // namespace CoolingControl
