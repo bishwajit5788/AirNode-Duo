@@ -8,8 +8,8 @@ AirNode Duo is a lightweight, roof-mounted, Wi-Fi-controlled dual-BLDC airflow s
 
 The current prototype concept combines:
 
-- **Motor 1:** 2312 920KV CW BLDC + 9450-class CW propeller
-- **Motor 2:** 2312 920KV CW BLDC + 9450-class CW propeller
+- **Motor 1:** 2312 920KV CW BLDC + 9350-class CW propeller
+- **Motor 2:** 2312 920KV CW BLDC + 9350-class CW propeller
 - **Motor 1 cooling stage:** 12 V / ~2 A Peltier + liquid coolant loop + copper tube coil behind the propeller
 - **Motor 2:** normal unobstructed airflow
 - **ESCs:** 2 × Favorite LittleBee 30A-S OPTO
@@ -30,7 +30,7 @@ The intended arrangement is:
         MOTOR 1                                  MOTOR 2
       2312 920KV                               2312 920KV
            │                                        │
-         9450                                     9450
+         9350                                     9350
            │                                        │
            ▼                                        ▼
    ┌───────────────┐                         NORMAL AIRFLOW
@@ -64,7 +64,7 @@ The intended arrangement is:
 | Subsystem | Component | Specification / role |
 |---|---|---|
 | Airflow | 2 × BLDC motor | Readytosky 2312 920KV |
-| Propeller | 2 × | 9450-class CW, final prop/current to be validated |
+| Propeller | 2 × | 9350-class CW; current/temp to be measured with guards |
 | Motor ESC | 2 × | Favorite LittleBee 30A-S OPTO |
 | Controller | 1 × | ESP32-C3, Wi-Fi web control |
 | Main PSU | 1 × | 12 V / 50 A / 600 W external SMPS |
@@ -160,3 +160,15 @@ This image represents the **current design concept**, not a photograph of the as
 - [Thermoelectric cooling (SVG)](concept/airnode-duo-thermoelectric-cooling.svg) — schematic diagram
 - [Thermoelectric cooling (PNG)](concept/airnode-duo-thermoelectric-cooling.png) — generated concept illustration
 - [Thermoelectric cooling (JPG)](concept/airnode-duo-thermoelectric-cooling.jpg) — same illustration
+
+
+## Propeller guards (selected free frame)
+
+| Parameter | Value |
+|-----------|--------|
+| Source | Freely available fan cover / 风扇罩 frame |
+| Overall size | **~251 × 251 × 75 mm** |
+| Propeller | **9350-class** (~9.3″ / ~236 mm) |
+| Fit note | Confirm real prop diameter and center bolt pattern before printing two units |
+
+Print suggestion: PETG, 0.2 mm layer, verify hub/motor mount compatibility.

@@ -69,7 +69,8 @@ Motor 1 may use an experimental thermoelectric liquid loop to slightly cool the 
 | Max continuous current | ~14 A (nameplate) |
 | Max continuous power | ~220 W (nameplate) |
 | Voltage class | ~2S–4S equivalent |
-| Suggested prop families | 9443, **9450** (start), 1045 |
+| Selected propeller | **9350-class CW** (primary) |
+| Other prop families considered | 9443, 9450, 1045 |
 
 **Do not assume** “30 A ESC ⇒ 30 A motor current.” Actual current depends on propeller, voltage, throttle, blockage, and mounting. **Measure** current on the finished hardware.
 
@@ -79,11 +80,16 @@ Motor 1 may use an experimental thermoelectric liquid loop to slightly cool the 
 
 | Candidate | Role |
 |-----------|------|
-| **9450** | Primary starting candidate |
+| **9350** | **Selected primary propeller** |
 | 9443 | Lower-load baseline |
+| 9450 | Alternate mid-size |
 | 1045 | Larger swept-area comparison |
 
-Larger props can raise current, temperature, vibration, noise, and stress. Final choice requires measured current, temperatures, vibration, airflow, and acoustics — not automatic selection of the largest prop.
+**9350** is approximately **9.3″ diameter** (~**236 mm** tip-to-tip) with a **5.0″-class pitch**, depending on exact manufacturer marking.
+
+This pairs well with the free **~251 × 251 × 75 mm** fan-guard frames (风扇罩): about **~7–8 mm** radial clearance per side if the prop is truly ~236 mm and centered — confirm by measuring the real prop and hub.
+
+Always **measure** motor/ESC current and temperature with the installed 9350 + guards. Do not assume current from the ESC rating.
 
 ---
 
@@ -389,7 +395,7 @@ Do **not** mark hardware validation complete without measurements.
 - [ ] Stronger cooling safety state machine  
 - [ ] Physical emergency-stop input  
 - [ ] Prop guards, frame, long-duration thermal/vibration tests  
-- [ ] Propeller selection from measured data  
+- [x] Propeller selected: **9350-class CW** (current/temp validation still required)  
 
 ---
 

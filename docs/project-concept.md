@@ -59,7 +59,7 @@ The Peltier does not sit directly in the propeller airflow. Instead:
              MOTOR 1
           2312 920KV
                │
-             9450
+             9350
                ↓↓↓
         ┌───────────────┐
         │ COPPER COIL   │  ← coolant from pump
@@ -105,13 +105,13 @@ The project has now evolved from a dual-airflow prototype into a **dual-airflow 
 
 ### Motor 1 — cooled airflow
 
-**2312 920KV CW motor → 9450-class propeller → copper coolant coil → cooled downward airflow → occupant.**
+**2312 920KV CW motor → 9350-class propeller → copper coolant coil → cooled downward airflow → occupant.**
 
 The copper coil is a liquid-to-air heat exchanger. Coolant is circulated by a small pump through flexible tubing. The Peltier cools the coolant through a proper cold-side copper/aluminium block.
 
 ### Motor 2 — normal airflow
 
-**2312 920KV CW motor → 9450-class propeller → unobstructed downward airflow → occupant.**
+**2312 920KV CW motor → 9350-class propeller → unobstructed downward airflow → occupant.**
 
 This provides independent airflow even when the thermoelectric stage is disabled.
 
