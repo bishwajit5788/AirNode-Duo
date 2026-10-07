@@ -1,74 +1,69 @@
 # AirNode Duo — Center control / cooling enclosure
 
-Low-profile 3D-printed box for the **balanced center node** that sits on the mosquito-net / tent structure between the two motor frames.
+Low-profile 3D-printed box for the **balanced center node** on the mosquito-net / tent structure.
 
-Houses the ESP32-C3 controller, TEC cooling stack, pump, and drivers — kept **short in height** so the assembly does not stand high on soft fabric.
+## Files (print-ready)
 
-## Files
+| File | Role | Bounding box (mm) | Mesh notes |
+|------|------|-------------------|------------|
+| `case-body.stl` | Main body | **130 × 110 × 50** | **Open top** for lid; cleaned for FDM |
+| `cap.stl` | Lid | **130 × 110 × 15** | Watertight; print flat |
 
-| File | Role | Bounding box (mm) |
-|------|------|-------------------|
-| `case-body.stl` | Main enclosure body | **130.0 × 110.0 × 50.0** |
-| `cap.stl` | Lid / cover | **130.0 × 110.0 × 15.0** |
+## 3D print settings (recommended)
 
-| Assembled | Approx. |
-|-----------|---------|
-| Footprint | **130 × 110 mm** |
-| Body height | **50 mm** |
-| Lid | **15 mm** (may overlap rim → external height often ~50–55 mm) |
+| Setting | Body | Lid |
+|---------|------|-----|
+| Material | **PETG** | PETG |
+| Nozzle | 0.4 mm | 0.4 mm |
+| Layer height | **0.20 mm** | 0.20 mm |
+| Walls / perimeters | **3** | 3 |
+| Top/bottom layers | 4–5 | 4–5 |
+| Infill | **15–25%** gyroid or grid | 15–25% |
+| Supports | **None** (correct orientation) | None |
+| Orientation | **Open face UP**, floor on bed | Flat on bed |
 
-## Intended contents
-
-| Component | Spec / notes |
-|-----------|----------------|
-| ESP32-C3 | SoftAP controller + buck 12 V → 5 V |
-| Peltier | **TEC1-12706** (40 × 40 × ~3.8 mm), ~12 V, **~4–6 A** — MOSFET driver only |
-| Cold block | Aluminium water block **40 × 40 × (12+7) mm** |
-| Hot side | Heatsink **with fan** kit for TEC1-12706 (compact, ~40 mm-class fan) |
-| Pump | **RF-370CA-12560** 12 V self-priming diaphragm (~**65 + 19 mm** long, **Ø ~29 mm**, **Ø 8 mm** ports) |
-| Drivers | Logic-level MOSFETs for pump (GPIO 6) and TEC (GPIO 7) |
-
-## Layout (low height)
-
-Lay the TEC sandwich **flat**; exhaust the hot fan **out the side** (not into the net):
+### Orientation
 
 ```text
-        ←———— 130 mm ————→
-┌────────────────────────────┐
-│ ESP32 + buck + FETs (dry)  │
-│ RF-370 pump (along length) │  110 mm
-│ [block | TEC | HS+fan] → side exhaust
-└────────────────────────────┘
-         height 50 mm body
+case-body.stl                 cap.stl
+   open top ↑
+   ┌─────────┐               ┌─────────┐
+   │  cavity │               │   lid   │
+   │  floor  │ ← on bed      └─────────┘ ← on bed
+   └─────────┘
 ```
 
-## Fit check
+### Printability
 
-| Part | Fits? |
-|------|--------|
-| Pump ~84 mm long | Yes, along 130 mm axis |
-| Pump Ø29 mm | Yes, inside ~47–48 mm internal height |
-| 40×40 block + TEC + HS/fan **flat** | Yes, if HS+fan pack height ≤ ~40–45 mm |
-| Upright TEC stack | Too tall for 50 mm body — **do not use** |
+- Body is an **open-top shell** (not a sealed hollow bubble) so FDM slices cleanly.
+- Floor at Z = 0 for bed contact.
+- After print: drill **Ø8–9 mm** side holes for RF-370 / block tubing if needed.
+- Cut or design a **side grille** for TEC heatsink fan exhaust (hot air out, not into the net).
 
-## Print suggestions
+### Fit
 
-| Setting | Suggestion |
-|---------|------------|
-| Material | PETG |
-| Layer height | 0.20 mm |
-| Walls | 3 |
-| Infill | 20–30% |
-| Orientation | Body open face up; lid flat |
+| Item | Guidance |
+|------|----------|
+| Internal height | ~47–48 mm above floor |
+| Pump RF-370 | ~84 mm × Ø29 — along 130 mm axis |
+| TEC stack | **Flat**; fan exhaust **sideways** |
+| Lid | Light friction or M3 corner screws |
 
-Add **side vents** for the heatsink fan (cut or design grille). Keep coolant fittings and electronics separated; plan a drip path that does not wet the ESP32.
+## Contents
 
-## Electrical / safety
+| Component | Spec |
+|-----------|------|
+| ESP32-C3 + buck 12→5 V | Dry side |
+| TEC1-12706 | 40×40×~3.8 mm; MOSFET only (~4–6 A) |
+| Water block | 40×40×(12+7) mm |
+| Heatsink + fan | Compact TEC kit |
+| Pump | RF-370CA-12560, Ø8 mm ports |
 
-- TEC1-12706 needs a **≥ 10 A** MOSFET path — never direct ESP32 GPIO.
-- Firmware: pump prime before TEC; Motor 1 airflow interlock (see firmware docs).
-- Leak-test the loop before enabling the Peltier.
-- Secondary **tether** the whole hanging assembly.
+## Safety
+
+- TEC/pump via MOSFET — never direct ESP32 GPIO.
+- Leak-test before enabling TEC.
+- Secondary tether on hanging assembly.
 
 ## Related
 
