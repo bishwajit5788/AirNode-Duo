@@ -8,8 +8,8 @@ AirNode Duo is a lightweight, roof-mounted, Wi-Fi-controlled dual-BLDC airflow s
 
 The current prototype concept combines:
 
-- **Motor 1:** 2312 920KV CW BLDC + 9350-class CW propeller
-- **Motor 2:** 2312 920KV CW BLDC + 9350-class CW propeller
+- **Motor 1:** 2312 920KV CW BLDC + 9450-class CW propeller (carbon fiber)
+- **Motor 2:** 2312 920KV CW BLDC + 9450-class CW propeller (carbon fiber)
 - **Motor 1 cooling stage:** 12 V / ~2 A Peltier + liquid coolant loop + copper tube coil behind the propeller
 - **Motor 2:** normal unobstructed airflow
 - **ESCs:** 2 × Favorite LittleBee 30A-S OPTO
@@ -30,7 +30,7 @@ The intended arrangement is:
         MOTOR 1                                  MOTOR 2
       2312 920KV                               2312 920KV
            │                                        │
-         9350                                     9350
+         9450                                     9450
            │                                        │
            ▼                                        ▼
    ┌───────────────┐                         NORMAL AIRFLOW
@@ -64,7 +64,7 @@ The intended arrangement is:
 | Subsystem | Component | Specification / role |
 |---|---|---|
 | Airflow | 2 × BLDC motor | Readytosky 2312 920KV |
-| Propeller | 2 × | 9350-class CW; current/temp to be measured with guards |
+| Propeller | 2 × | 9450 carbon fiber CW; current/temp to be measured with guards |
 | Motor ESC | 2 × | Favorite LittleBee 30A-S OPTO |
 | Controller | 1 × | ESP32-C3, Wi-Fi web control |
 | Main PSU | 1 × | 12 V / 50 A / 600 W external SMPS |
@@ -162,13 +162,16 @@ This image represents the **current design concept**, not a photograph of the as
 - [Thermoelectric cooling (JPG)](concept/airnode-duo-thermoelectric-cooling.jpg) — same illustration
 
 
-## Propeller guards (selected free frame)
+## Propeller guards / motor frames (3D printed)
 
-| Parameter | Value |
-|-----------|--------|
-| Source | Freely available fan cover / 风扇罩 frame |
-| Overall size | **~251 × 251 × 75 mm** |
-| Propeller | **9350-class** (~9.3″ / ~236 mm) |
-| Fit note | Confirm real prop diameter and center bolt pattern before printing two units |
+Printed parts live in **[`frames/`](frames/)** with a full parts list and print notes.
 
-Print suggestion: PETG, 0.2 mm layer, verify hub/motor mount compatibility.
+| Node | Bottom cage | Height Z | Notes |
+|------|-------------|----------|--------|
+| Motor 1 (cooled) | `frames/b-frame-71mm-cooled.stl` | **71.0 mm** | Extra height for copper coil under motor |
+| Motor 2 (air only) | `frames/b-frame-61mm.stl` | **61.0 mm** | No liquid coil |
+| Both | `frames/t-frame.stl`, `t-frame-2.stl` | **4.54 mm** | Top grilles (one per node) |
+
+Outer footprint: **253.47 × 253.47 mm**. Motors mount **inside** the cages. Propeller: **9450** carbon (~239 mm disc).
+
+See [`frames/README.md`](frames/README.md) for assembly, print settings, and fit notes.

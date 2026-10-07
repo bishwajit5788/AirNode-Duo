@@ -69,7 +69,7 @@ Motor 1 may use an experimental thermoelectric liquid loop to slightly cool the 
 | Max continuous current | ~14 A (nameplate) |
 | Max continuous power | ~220 W (nameplate) |
 | Voltage class | ~2S–4S equivalent |
-| Selected propeller | **9350-class CW** (primary) |
+| Selected propeller | **9450 carbon fiber CW** (primary) |
 | Other prop families considered | 9443, 9450, 1045 |
 
 **Do not assume** “30 A ESC ⇒ 30 A motor current.” Actual current depends on propeller, voltage, throttle, blockage, and mounting. **Measure** current on the finished hardware.
@@ -80,16 +80,19 @@ Motor 1 may use an experimental thermoelectric liquid loop to slightly cool the 
 
 | Candidate | Role |
 |-----------|------|
-| **9350** | **Selected primary propeller** |
+| **9450** | **Selected primary propeller** (carbon fiber, F450/F550 class) |
 | 9443 | Lower-load baseline |
-| 9450 | Alternate mid-size |
+| 9350 | Smaller alternate |
 | 1045 | Larger swept-area comparison |
 
-**9350** is approximately **9.3″ diameter** (~**236 mm** tip-to-tip) with a **5.0″-class pitch**, depending on exact manufacturer marking.
+**9450** is approximately **9.4″ diameter** (~**239 mm** tip-to-tip) with a **5.0″ pitch**.
 
-This pairs well with the free **~251 × 251 × 75 mm** fan-guard frames (风扇罩): about **~7–8 mm** radial clearance per side if the prop is truly ~236 mm and centered — confirm by measuring the real prop and hub.
+Printed motor frames (motors **inside** the cages) are in [`hardware/frames/`](hardware/frames/):
 
-Always **measure** motor/ESC current and temperature with the installed 9350 + guards. Do not assume current from the ESC rating.
+- Motor 2 (air only): **253.47 × 253.47 × 61.0 mm** bottom + top grille  
+- Motor 1 (copper coil under motor): **253.47 × 253.47 × 71.0 mm** bottom + top grille  
+
+Always **measure** motor/ESC current and temperature with the installed 9450 + guards. Do not assume current from the ESC rating.
 
 ---
 
@@ -395,7 +398,7 @@ Do **not** mark hardware validation complete without measurements.
 - [ ] Stronger cooling safety state machine  
 - [ ] Physical emergency-stop input  
 - [ ] Prop guards, frame, long-duration thermal/vibration tests  
-- [x] Propeller selected: **9350-class CW** (current/temp validation still required)  
+- [x] Propeller selected: **9450 carbon fiber CW** (current/temp validation still required)  
 
 ---
 
