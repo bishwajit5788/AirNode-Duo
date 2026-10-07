@@ -175,3 +175,17 @@ Printed parts live in **[`frames/`](frames/)** with a full parts list and print 
 Outer footprint: **253.47 × 253.47 mm**. Motors mount **inside** the cages. Propeller: **9450** carbon (~239 mm disc).
 
 See [`frames/README.md`](frames/README.md) for assembly, print settings, and fit notes.
+
+
+## Center control / cooling enclosure
+
+Low-profile box for ESP32-C3, **TEC1-12706**, 40×40 water block, heatsink+fan, and **RF-370CA-12560** pump.
+
+| Part | File | Size (mm) |
+|------|------|-----------|
+| Body | [`enclosure/case-body.stl`](enclosure/case-body.stl) | **130 × 110 × 50** |
+| Lid | [`enclosure/cap.stl`](enclosure/cap.stl) | **130 × 110 × 15** |
+
+Designed for **flat** TEC stack and **side** hot-air exhaust so height stays low on a mosquito net / tent.
+
+Full notes: [`enclosure/README.md`](enclosure/README.md)
